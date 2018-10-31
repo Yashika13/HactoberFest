@@ -79,9 +79,9 @@ public class ArrayQueue
        // myq.display();
         int n1=sc.nextInt();
         int n2=sc.nextInt();
-        //myq.display(); 
-       //myq.dequeue();
-       //myq.display();
+        /*myq.display(); 
+          myq.dequeue();
+          myq.display(); */
         while(n2-->0)
        {
         int max=-1;
@@ -98,9 +98,9 @@ public class ArrayQueue
             		max=tempArray[i];
             	}
         	}
-       // System.out.println("max"+max);
+       /* System.out.println("max"+max);
         
-        //myq.display();
+          myq.display(); */
         int dqcount=0;
         for(int i=0;i<n1;i++)
         {   
