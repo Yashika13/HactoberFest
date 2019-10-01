@@ -1,0 +1,110 @@
+<?php 
+
+class Stack { 
+	protected $stack; 
+	protected $limit; 
+
+function CreateStack($limit){ 
+		$this->stack = array(); 
+		$this->limit = $limit; 
+	} 
+	
+	function push($item) { 
+		// trap for stack overflow 
+		if (count($this->stack) < $this->limit) { 
+			// prepend item to the start of the array 
+			array_unshift($this->stack, $item); 
+		} else { 
+			throw new RunTimeException('Stack is full!'); 
+		} 
+	} 
+
+	function pop() { 
+		if ($this->isEmpty()) { 
+			// trap for stack underflow 
+		throw new RunTimeException('Stack is empty!'); 
+	} else { 
+			// pop item from the start of the array 
+			return array_shift($this->stack); 
+		} 
+	} 
+
+	function top() { 
+		return current($this->stack); 
+	} 
+
+	function isEmpty() { 
+		return empty($this->stack); 
+	} 
+	
+	function Prec($ch) 
+	{ 
+		switch ($ch) 
+		{ 
+		case '+': 
+		case '-': 
+			return 1; 
+
+		case '*': 
+		case '/': 
+			return 2; 
+
+		case '^': 
+			return 3; 
+		} 
+		return -1; 
+	} 
+	function isOperand($ch) 
+	{ 
+		return ($ch >= 'a' && $ch <= 'z') || ($ch >= 'A' && $ch <= 'Z'); 
+	} 
+	
+	function isOperator($x) { 
+	switch ($x) { 
+	case '+': 
+	case '-': 
+	case '/': 
+	case '*': 
+		return true; 
+	} 
+	return false; 
+	} 
+	
+	public function getInfix($exp) 
+	{ 
+	
+	$this->CreateStack(sizeof($exp)); 
+		
+	for ($i=0; $exp[$i]!= null; $i++) 
+	{ 
+		// Push operands 
+		if ($this->isOperand($exp[$i])) 
+		{ 
+			$op = $exp[$i]; 
+			$this->push($op); 
+		} 
+	
+		// We assume that input is 
+		// a valid postfix and expect 
+		// an operator. 
+		else
+		{ 
+				$op1 = $this->top(); $this->pop(); 
+					$op2 = $this->top(); $this->pop(); 
+					$this->push("(". $op2 . $exp[$i] . $op1 . ")"); 
+					//$this->push($temp); 
+			
+		} 
+	} 
+	
+	// There must be a single element 
+	// in stack now which is the required 
+	// infix. 
+	return $this->top(); 
+} 
+} 
+$myExample = new Stack(); 
+echo $input = "ab*c+"; 
+$exp = str_split($input,sizeof($input)); 
+echo '<br>'.$data = $myExample->getInfix($exp); 
+?> 
